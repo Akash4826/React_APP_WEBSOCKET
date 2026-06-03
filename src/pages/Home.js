@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-
+const fruits = ['apple', 'banana', 'orange', 'grape', 'kiwi', 'melon', 'peach', 'pear', 'plum', 'strawberry'];
 
 function Home() {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
-  const fruits = ['apple', 'banana', 'orange', 'grape', 'kiwi', 'melon', 'peach', 'pear', 'plum', 'strawberry'];
+  const lastTimeCalled = useRef(0);
 
   function saveData(data) {
 
@@ -13,36 +13,17 @@ function Home() {
     console.log("Save data")
   }
 
-  function throttle() {
+  const handleSubmit = useCallback(() => {
+    const delay = 5000;
+    const currentTime = Date.now();
 
-    let delay = 5000;
-    let lasTmeCalled = 0;
-
-    console.log(lasTmeCalled)
-
-    return function () {
-
-      let currentTime = Date.now()
-      console.log(currentTime - lasTmeCalled, delay)
-      if ((currentTime - lasTmeCalled) > delay) {
-
-        lasTmeCalled = currentTime
-
-        saveData(results)
-
-      }
-      else {
-        console.log(currentTime, lasTmeCalled, "else")
-
-
-        alert("Wait for saving data don't click continuosly")
-      }
-
+    if (currentTime - lastTimeCalled.current > delay) {
+      lastTimeCalled.current = currentTime;
+      saveData(results);
+    } else {
+      alert("Wait for saving data don't click continuosly");
     }
-
-
-  }
-  const handleSubmit = useCallback(throttle(), []);
+  }, [results]);
 
   useEffect(() => {
     console.log("searching for", search);

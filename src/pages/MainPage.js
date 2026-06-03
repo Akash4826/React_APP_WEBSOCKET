@@ -11,27 +11,25 @@ function MainPage() {
     const [ flightdata, setFlightData]=useState()
 
 // Define the flight search criteria payload
-const searchData = {
-  origin: 'DEL',            // Delhi, India
-  destination: 'BOM',       // Mumbai, India
-  departureDate: '2026-06-20',
-  passengers: { adults: 1, children: 0 },
-  cabinClass: 'ECONOMY'
-};
-
-
-
 useEffect(()=>{
+    const searchData = {
+      origin: 'DEL',            // Delhi, India
+      destination: 'BOM',       // Mumbai, India
+      departureDate: '2026-06-20',
+      passengers: { adults: 1, children: 0 },
+      cabinClass: 'ECONOMY'
+    };
+
     async function searchFlights() {
-  try {
-    const response = await fetch(url, {
-      method: 'POST', // Specifies this is a POST request
-      headers: {
-        'Content-Type': 'application/json', // Tells the API you are sending JSON
-        'Authorization': 'Bearer YOUR_API_KEY' // Your API secret token
-      },
-      body: JSON.stringify(searchData) // Converts the JS object into a JSON string
-    });
+      try {
+        const response = await fetch(url, {
+          method: 'POST', // Specifies this is a POST request
+          headers: {
+            'Content-Type': 'application/json', // Tells the API you are sending JSON
+            'Authorization': 'Bearer YOUR_API_KEY' // Your API secret token
+          },
+          body: JSON.stringify(searchData) // Converts the JS object into a JSON string
+        });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

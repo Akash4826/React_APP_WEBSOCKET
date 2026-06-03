@@ -49,8 +49,9 @@ searchFlights()
     return (
 
         <>
-            <div> Counter : {count}</div>
+            <label for="counterIp">Counter : {count}</label>
             <input
+                id="counterIp" name="counter_ip"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)} 
             />
